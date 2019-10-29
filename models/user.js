@@ -1,41 +1,30 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
+const mongoose = require("mongoose");
+const validator = require("validator");
+const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    }
-})
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  created_at: {
+    type: Date,
+    default: Date.now
+  }
+});
 
-userSchema.pre('save', function (next) {
-    if (!this.isModified('password')) {
-        return next();
-    }
-    this.password = User.encryptPassword(this.password);
+userSchema.pre("save", function(next) {
+  bcrypt.hash(this.password, 10, (err, encrypted) => {
+    if (err) throw err;
+    this.password = encrypted;
     next();
-})
-
-
-
-userSchema.path('email').validate(function (email) {
-    return validator.isEmail(email);
+  });
 });
 
-userSchema.path('password').validate(function (password) {
-    return validator.isLength(password, 6);
-});
-
-
-
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
 module.exports = User;
