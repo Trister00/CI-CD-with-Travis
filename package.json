@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_ENV=test jest --force-exit"
   },
   "keywords": [],
   "author": "",
@@ -15,10 +15,12 @@
     "express": "^4.17.1",
     "express-session": "^1.16.2",
     "jade": "^1.11.0",
+    "jest": "^24.9.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.4",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+    "supertest": "^4.0.2",
     "uuid": "^3.3.3",
     "validator": "^11.1.0"
   },
